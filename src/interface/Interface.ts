@@ -10,7 +10,8 @@ export interface Movie {
   description: string;
   rated: string;
   trailer_url: string;
-  _id: string;
+  isShowing: boolean;
+  id: string;
 }
 
 export interface Province {

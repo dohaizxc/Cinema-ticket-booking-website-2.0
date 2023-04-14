@@ -211,7 +211,7 @@ export const Cinemas = () => {
                   <div>
                     {showtimes?.map((showtime: Showtime) => (
                       <div
-                        key={showtime.movie._id}
+                        key={showtime.movie.id}
                         className="lg:mx-16 my-5 mx-2"
                       >
                         <div className="flex">
@@ -225,7 +225,7 @@ export const Cinemas = () => {
                               className="font-bold sm:text-xl mb-4 cursor-pointer hover:text-sky-500"
                               onClick={() => {
                                 scroll(0, 0);
-                                navigate(`/movie/${showtime.movie._id}`);
+                                navigate(`/movie/${showtime.movie.id}`);
                               }}
                             >
                               {showtime.movie.rated.substring(0, 1) === "P" ? (

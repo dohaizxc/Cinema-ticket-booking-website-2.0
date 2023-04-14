@@ -36,7 +36,7 @@ export const Booking = () => {
   const [paymentMethod, setPaymentMethod] = useState<any>();
 
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const [ageVerification, setAgeVerification] = useState<boolean>(false);
+  // const [ageVerification, setAgeVerification] = useState<boolean>(false);
 
   const param = useParams();
   const id = param.id;
@@ -58,21 +58,21 @@ export const Booking = () => {
         left: 0,
         behavior: "smooth",
       });
-      setAgeVerification(false);
+      // setAgeVerification(false);
       setStep(step - 1);
     }
   };
 
-  React.useEffect(() => {
-    if (ageVerification) {
-      setStep(2);
-      window.scroll({
-        top: 0,
-        left: 0,
-        behavior: "smooth",
-      });
-    }
-  }, [ageVerification]);
+  // React.useEffect(() => {
+  //   if (ageVerification) {
+  //     setStep(2);
+  //     window.scroll({
+  //       top: 0,
+  //       left: 0,
+  //       behavior: "smooth",
+  //     });
+  //   }
+  // }, [ageVerification]);
 
   const handleNextClick = (step: number) => {
     if (step === 1) {
@@ -179,7 +179,8 @@ export const Booking = () => {
       <Modal
         openModal={openModal}
         setOpenModal={setOpenModal}
-        setConfirm={setAgeVerification}
+        // setConfirm={setStep(step - 1);}
+        handleConfirm={() => setStep(step + 1)}
         title="Xác nhận độ tuổi"
         content={
           "Tôi xác nhận mua vé cho người xem từ " +

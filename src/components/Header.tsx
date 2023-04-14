@@ -146,9 +146,9 @@ export const Header = () => {
               >
                 {searchMovies?.map((movie: Movie) => (
                   <div
-                    key={movie._id}
+                    key={movie.id}
                     className="flex items-center h-16 space-x-2 cursor-pointer hover:bg-sky-100 hover:text-sky-500"
-                    onClick={() => handleMovie(movie._id)}
+                    onClick={() => handleMovie(movie.id)}
                   >
                     <img className="h-16 w-12" src={movie.image}></img>
                     <p className="w-40 font-bold text-xs hover:text-sky-500 col-span-3">
@@ -199,9 +199,9 @@ export const Header = () => {
           >
             {searchMovies?.map((movie: Movie) => (
               <div
-                key={movie._id}
+                key={movie.id}
                 className="flex items-center space-x-2 pl-1 cursor-pointer hover:bg-sky-100 hover:text-sky-500"
-                onClick={() => handleMovie(movie._id)}
+                onClick={() => handleMovie(movie.id)}
               >
                 <img src={movie.image} className="h-12 w-8" />
                 <p className="font-bold text-xs hover:text-sky-500">

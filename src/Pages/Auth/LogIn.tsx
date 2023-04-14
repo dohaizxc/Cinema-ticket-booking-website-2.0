@@ -1,47 +1,47 @@
 import React from "react";
-import { Layout } from "../../components/Layout";
 import { MailOutlined, KeyOutlined } from "@ant-design/icons";
 import { Input, Form } from "antd";
 import { Link } from "react-router-dom";
-import { usePost } from "../../api/post";
 import { openNotification } from "../../components/Notifications";
 import { useNavigate } from "react-router-dom";
 import { Banner } from "../../components/Banner";
 import { ThemeProvider } from "../../components/ThemeProvider";
+import usePost from "../../axios/usePost";
 
 export const LogIn = () => {
   const navigate = useNavigate();
-  const { fetchPost: fetchUser, result: userResult, isError } = usePost<any>();
+  const { mutate } = usePost("auth/signin");
 
-  const onFinish = (values: any) => {
-    fetchUser(values, "auth/userlogin");
+  const onFinish = async (values: any) => {
+    console.log(values);
+    mutate(values);
   };
 
-  React.useEffect(() => {
-    const object = localStorage.getItem("user");
-    if (object) {
-      scroll(0, 0);
-      navigate(`/`);
-    }
-  }, []);
+  // React.useEffect(() => {
+  //   const object = localStorage.getItem("user");
+  //   if (object) {
+  //     scroll(0, 0);
+  //     navigate(`/`);
+  //   }
+  // }, []);
 
-  React.useEffect(() => {
-    if (userResult) {
-      if (!isError) {
-        openNotification("success", "Đăng nhập thành công");
-        localStorage.setItem("token", userResult.accessToken);
-        localStorage.setItem("user", JSON.stringify(userResult.foundUser));
-        scroll(0, 0);
-        const link = localStorage.getItem("link");
-        if (link) {
-          navigate(link);
-          window.localStorage.removeItem("link");
-        } else navigate("/");
-      } else {
-        openNotification("error", "Tên tài khoản hoặc mật khẩu không đùng");
-      }
-    }
-  }, [userResult]);
+  // React.useEffect(() => {
+  //   if (userResult) {
+  //     if (!isError) {
+  //       openNotification("success", "Đăng nhập thành công");
+  //       localStorage.setItem("token", userResult.accessToken);
+  //       localStorage.setItem("user", JSON.stringify(userResult.foundUser));
+  //       scroll(0, 0);
+  //       const link = localStorage.getItem("link");
+  //       if (link) {
+  //         navigate(link);
+  //         window.localStorage.removeItem("link");
+  //       } else navigate("/");
+  //     } else {
+  //       openNotification("error", "Tên tài khoản hoặc mật khẩu không đùng");
+  //     }
+  //   }
+  // }, [userResult]);
 
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
@@ -54,7 +54,7 @@ export const LogIn = () => {
           <Banner></Banner>
         </div>
 
-        <div className="lg:w-2/5 md:w-1/2 w-full lg:h-[85vh] bg-white dark:bg-slate-800 rounded drop-shadow-md">
+        <div className="lg:w-2/5 md:w-1/2 w-full lg:h-[85vh] min-h-[400px] bg-white dark:bg-slate-800 rounded drop-shadow-md">
           <div className="flex flex-col items-center">
             <h1 className="font-bold text-center text-2xl my-8">ĐĂNG NHẬP</h1>
             <ThemeProvider>
@@ -116,6 +116,7 @@ export const LogIn = () => {
 
               <div>Quên mật khẩu</div>
             </div>
+
             {/* <div className="flex items-center w-2/3 my-1">
               <div className="w-1/2 h-0.5 bg-gray-500"></div>
               <div className="text-center px-2 w-1/4">

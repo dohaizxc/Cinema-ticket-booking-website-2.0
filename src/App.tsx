@@ -15,28 +15,35 @@ import { NewsOfferDetails } from "./Pages/NewsOffer/NewsOfferDetails";
 import { MembershipPage } from "./Pages/NewsOffer/MembershipPage";
 import { DarkMode } from "./components/DarkMode";
 import { Layout } from "./components/Layout";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 function App() {
+  const queryClient = new QueryClient();
   return (
     <div className="App">
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/movie" element={<Movies />} />
-          <Route path="/movie/:id" element={<MovieDetails />} />
-          <Route path="/cinema" element={<Cinemas />} />
-          <Route path="/newsoffer" element={<NewsOffer />} />
-          <Route path="/newsoffer/membership" element={<MembershipPage />} />
-          <Route path="/newsoffer/detail/:id" element={<NewsOfferDetails />} />
-          <Route path="/booking/:id" element={<Booking />} />
-          <Route path="/login" element={<LogIn />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/ticket/:id" element={<Ticket />} />
-          <Route path="/test" element={<DarkMode />} />
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
+      <QueryClientProvider client={queryClient}>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/movie" element={<Movies />} />
+            <Route path="/movie/:id" element={<MovieDetails />} />
+            <Route path="/cinema" element={<Cinemas />} />
+            <Route path="/newsoffer" element={<NewsOffer />} />
+            <Route path="/newsoffer/membership" element={<MembershipPage />} />
+            <Route
+              path="/newsoffer/detail/:id"
+              element={<NewsOfferDetails />}
+            />
+            <Route path="/booking/:id" element={<Booking />} />
+            <Route path="/login" element={<LogIn />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/ticket/:id" element={<Ticket />} />
+            <Route path="/test" element={<DarkMode />} />
+            <Route path="*" element={<NotFound />} />
+          </Route>
+        </Routes>
+      </QueryClientProvider>
     </div>
   );
 }

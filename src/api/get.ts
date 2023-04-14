@@ -14,7 +14,6 @@ export const useGet = <T extends any>() => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
       },
     })
       .then((res) => {

@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Layout } from "../../components/Layout";
-import { useGet } from "../../api/get";
 import { useNavigate } from "react-router-dom";
 import { Movie } from "../../interface/Interface";
 import { Spin } from "antd";
 import { Tabs } from "../../components/Tabs";
+import { useGet } from "../../axios/useGet";
 
 export const Movies = () => {
   const navigate = useNavigate();
   const [selectedType, setSelectedType] = useState<boolean>(true);
-  const {
-    fetchGet: fetchMovies,
-    result: movieResults,
-    isLoading,
-  } = useGet<Movie[]>();
+  const { data: movieResults, isFetching } = useGet("movie");
+
   const [movies, setMovies] = useState<Movie[]>();
 
   const nowDay = new Date("2022-12-20");
@@ -21,15 +17,11 @@ export const Movies = () => {
 
   const nowShowing = movieResults?.filter((movie: Movie) => {
     return new Date(movie.releaseDate) <= nowDay;
-  }, []);
+  });
 
   const comingSoon = movieResults?.filter((movie: Movie) => {
     return new Date(movie.releaseDate) > nowDay;
-  }, []);
-
-  useEffect(() => {
-    fetchMovies("movie");
-  }, []);
+  });
 
   useEffect(() => {
     setMovies(
@@ -54,7 +46,7 @@ export const Movies = () => {
       ></Tabs>
 
       <div className="flex justify-center pb-5">
-        {isLoading ? (
+        {isFetching ? (
           <div className="flex justify-center min-h-screen">
             <Spin size="large" tip="Loading..." />
           </div>
@@ -62,21 +54,11 @@ export const Movies = () => {
           <div className="grid 2xl:grid-cols-6 lg:grid-cols-5 min-[840px]:grid-cols-4 md:grid-cols-3 grid-cols-2 sm:gap-x-8 gap-x-6 gap-y-5">
             {movies?.map((movie: Movie) => (
               <div
-                key={movie._id}
+                key={movie.id}
                 className="sm:w-[192px] w-[170px] sm:h-[455px] h-[420px] relative"
               >
-                {/* {movie.rated.substring(0, 1) === "P" ? (
-                    <p className="absolute top-2 left-2 bg-green-500 rounded-full font-semibold text-white py-1 px-[11px] z-10">
-                      P
-                    </p>
-                  ) : (
-                    <p className="absolute top-2 left-2 bg-red-500 rounded-full font-semibold text-white p-1 z-10">
-                      {movie.rated.substring(0, 3)}
-                    </p>
-                  )} */}
-
                 <div
-                  className={`absolute top-[38px] -left-4 w-0 h-0 border-l-[16px] border-l-transparent border-t-[20px] 
+                  className={`absolute top-[38px] -left-4 w-0 h-0 border-l-[16px] border-l-transparent border-t-[20px]
                     ${
                       movie.rated.substring(0, 1) === "P"
                         ? "border-t-green-800"
@@ -116,14 +98,14 @@ export const Movies = () => {
                   alt={movie.name}
                   onClick={() => {
                     scroll(0, 0);
-                    navigate(`/movie/${movie._id}`);
+                    navigate(`/movie/${movie.id}`);
                   }}
                 ></img>
                 <div
                   className="line-clamp-2 cursor-pointer font-bold mt-3 hover:text-sky-500"
                   onClick={() => {
                     scroll(0, 0);
-                    navigate(`/movie/${movie._id}`);
+                    navigate(`/movie/${movie.id}`);
                   }}
                 >
                   {movie.name}
@@ -145,7 +127,7 @@ export const Movies = () => {
                     className="sm:px-4 px-3 py-2 border border-transparent rounded-md font-semibold text-white bg-blue-500 hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:shadow-outline-blue transition duration-150 ease-in-out"
                     onClick={() => {
                       scroll(0, 0);
-                      navigate(`/movie/${movie._id}`);
+                      navigate(`/movie/${movie.id}`);
                     }}
                   >
                     {selectedType ? <>Mua vé</> : <>Chi tiết</>}

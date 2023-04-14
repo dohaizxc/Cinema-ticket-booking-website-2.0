@@ -83,7 +83,7 @@ export const MovieDetails = () => {
     if (selectedProvince) {
       fetchShowtimes(
         "showtime/" +
-          movie?._id +
+          movie?.id +
           "/" +
           selectedProvince?._id +
           "/" +
