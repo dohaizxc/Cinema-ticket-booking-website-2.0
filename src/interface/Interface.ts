@@ -12,6 +12,7 @@ export interface Movie {
   trailer_url: string;
   isShowing: boolean;
   id: string;
+  _id: string;
 }
 
 export interface Province {

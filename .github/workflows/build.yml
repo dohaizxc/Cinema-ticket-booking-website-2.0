@@ -1,0 +1,14 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - "github-action"
+  workflow_dispatch:
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: test echo
+        run: echo "this is runing"
